@@ -59,6 +59,11 @@ ENV BUILDLOGS=/tmp/buildlogs
 RUN sudo apt-get clean \
     && sudo rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
+RUN ["pip", "install", "intelhex"]
+
+RUN ["/usr/bin/git", "config", "--global", "--add", "safe.directory", "/ardupilot"]
+RUN ["/usr/bin/git", "config", "--global", "--add", "safe.directory", "/ardupilot/modules/ChibiOS"]
+
 ENV CCACHE_MAXSIZE=1G
 ENTRYPOINT ["/ardupilot_entrypoint.sh"]
 CMD ["bash"]

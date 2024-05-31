@@ -62,6 +62,7 @@ void AP_OSD_MSP_DisplayPort::osd_thread_run_once()
 
 void AP_OSD_MSP_DisplayPort::clear(void)
 {
+#if OSD_ENABLED
     // check if we need to enable some options
     // but only for actual OSD screens
     if (_osd.get_current_screen() < AP_OSD_NUM_DISPLAY_SCREENS) {
@@ -69,6 +70,7 @@ void AP_OSD_MSP_DisplayPort::clear(void)
         const uint8_t font_index = _osd.screen[_osd.get_current_screen()].get_font_index();
         _displayport->msp_displayport_set_options(font_index, txt_resolution);
     }
+#endif
 
     // clear remote MSP screen
     _displayport->msp_displayport_clear_screen();
@@ -133,7 +135,7 @@ AP_OSD_Backend *AP_OSD_MSP_DisplayPort::probe(AP_OSD &osd)
     }
     return backend;
 }
- 
+
 // return a correction factor used to display angles correctly
 float AP_OSD_MSP_DisplayPort::get_aspect_ratio_correction() const
 {
